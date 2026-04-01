@@ -1,280 +1,280 @@
-# Claude Code Source Snapshot for Security Research
+# Snapshot do Código Fonte do Claude Code para Pesquisa de Segurança
 
-> This repository mirrors a **publicly exposed Claude Code source snapshot** that became accessible on **March 31, 2026** through a source map exposure in the npm distribution. It is maintained for **educational, defensive security research, and software supply-chain analysis**.
-
----
-
-## Research Context
-
-This repository is maintained by a **university student** studying:
-
-- software supply-chain exposure and build artifact leaks
-- secure software engineering practices
-- agentic developer tooling architecture
-- defensive analysis of real-world CLI systems
-
-This archive is intended to support:
-
-- educational study
-- security research practice
-- architecture review
-- discussion of packaging and release-process failures
-
-It does **not** claim ownership of the original code, and it should not be interpreted as an official Anthropic repository.
+> Este repositório reflete um **snapshot do código fonte do Claude Code exposto publicamente** que se tornou acessível em **31 de março de 2026** por meio de uma exposição de source map na distribuição npm. Ele é mantido para fins de **educação, pesquisa de segurança defensiva e análise da cadeia de suprimentos de software**.
 
 ---
 
-## How the Public Snapshot Became Accessible
+## Contexto de Pesquisa
 
-[Chaofan Shou (@Fried_rice)](https://x.com/Fried_rice) publicly noted that Claude Code source material was reachable through a `.map` file exposed in the npm package:
+Este repositório é mantido por um **estudante universitário** que estuda:
 
-> **"Claude code source code has been leaked via a map file in their npm registry!"**
+- exposição da cadeia de suprimentos de software e vazamentos de artefatos de build
+- práticas de engenharia de software segura
+- arquitetura de ferramentas de desenvolvedor baseadas em agentes (agentics)
+- análise defensiva de sistemas CLI do mundo real
+
+Este arquivo destina-se a apoiar:
+
+- estudo educacional
+- prática de pesquisa de segurança
+- revisão de arquitetura
+- discussão de falhas nos processos de empacotamento e lançamento
+
+Ele **não** reivindica a propriedade do código original e não deve ser interpretado como um repositório oficial da Anthropic.
+
+---
+
+## Como o Snapshot Público se Tornou Acessível
+
+[Chaofan Shou (@Fried_rice)](https://x.com/Fried_rice) observou publicamente que o material de origem do Claude Code estava acessível através de um arquivo `.map` exposto no pacote npm:
+
+> **"O código fonte do Claude code foi vazado através de um arquivo map em seu registro npm!"**
 >
-> — [@Fried_rice, March 31, 2026](https://x.com/Fried_rice/status/2038894956459290963)
+> — [@Fried_rice, 31 de março de 2026](https://x.com/Fried_rice/status/2038894956459290963)
 
-The published source map referenced unobfuscated TypeScript sources hosted in Anthropic's R2 storage bucket, which made the `src/` snapshot publicly downloadable.
+O source map publicado referenciava fontes TypeScript não obfoscadas hospedadas no bucket R2 da Anthropic, o que tornou o snapshot da pasta `src/` publicamente disponível para download.
 
 ---
 
-## Repository Scope
+## Escopo do Repositório
 
-Claude Code is Anthropic's CLI for interacting with Claude from the terminal to perform software engineering tasks such as editing files, running commands, searching codebases, and coordinating workflows.
+O Claude Code é a CLI da Anthropic para interagir com o Claude a partir do terminal para realizar tarefas de engenharia de software, como editar arquivos, executar comandos, pesquisar bases de código e coordenar fluxos de trabalho.
 
-This repository contains a mirrored `src/` snapshot for research and analysis.
+Este repositório contém um espelhamento do snapshot da pasta `src/` para pesquisa e análise.
 
-- **Public exposure identified on**: 2026-03-31
-- **Language**: TypeScript
+- **Exposição pública identificada em**: 31/03/2026
+- **Linguagem**: TypeScript
 - **Runtime**: Bun
-- **Terminal UI**: React + [Ink](https://github.com/vadimdemedes/ink)
-- **Scale**: ~1,900 files, 512,000+ lines of code
+- **Interface de Terminal (UI)**: React + [Ink](https://github.com/vadimdemedes/ink)
+- **Escala**: ~1.900 arquivos, 512.000+ linhas de código
 
 ---
 
-## Directory Structure
+## Estrutura de Diretórios
 
 ```text
 src/
-├── main.tsx                 # Entrypoint orchestration (Commander.js-based CLI path)
-├── commands.ts              # Command registry
-├── tools.ts                 # Tool registry
-├── Tool.ts                  # Tool type definitions
-├── QueryEngine.ts           # LLM query engine
-├── context.ts               # System/user context collection
-├── cost-tracker.ts          # Token cost tracking
+├── main.tsx                 # Orquestração do ponto de entrada (CLI baseada em Commander.js)
+├── commands.ts              # Registro de comandos
+├── tools.ts                 # Registro de ferramentas
+├── Tool.ts                  # Definições de tipos de ferramentas
+├── QueryEngine.ts           # Mecanismo de consulta LLM
+├── context.ts               # Coleta de contexto do sistema/usuário
+├── cost-tracker.ts          # Rastreamento de custo de tokens
 │
-├── commands/                # Slash command implementations (~50)
-├── tools/                   # Agent tool implementations (~40)
-├── components/              # Ink UI components (~140)
-├── hooks/                   # React hooks
-├── services/                # External service integrations
-├── screens/                 # Full-screen UIs (Doctor, REPL, Resume)
-├── types/                   # TypeScript type definitions
-├── utils/                   # Utility functions
+├── commands/                # Implementações de comandos slash (~50)
+├── tools/                   # Implementações de ferramentas de agente (~40)
+├── components/              # Componentes de interface Ink (~140)
+├── hooks/                   # Hooks do React
+├── services/                # Integrações de serviços externos
+├── screens/                 # Interfaces de tela cheia (Doctor, REPL, Resume)
+├── types/                   # Definições de tipos TypeScript
+├── utils/                   # Funções utilitárias
 │
-├── bridge/                  # IDE and remote-control bridge
-├── coordinator/             # Multi-agent coordinator
-├── plugins/                 # Plugin system
-├── skills/                  # Skill system
-├── keybindings/             # Keybinding configuration
-├── vim/                     # Vim mode
-├── voice/                   # Voice input
-├── remote/                  # Remote sessions
-├── server/                  # Server mode
-├── memdir/                  # Persistent memory directory
-├── tasks/                   # Task management
-├── state/                   # State management
-├── migrations/              # Config migrations
-├── schemas/                 # Config schemas (Zod)
-├── entrypoints/             # Initialization logic
-├── ink/                     # Ink renderer wrapper
-├── buddy/                   # Companion sprite
-├── native-ts/               # Native TypeScript utilities
-├── outputStyles/            # Output styling
-├── query/                   # Query pipeline
-└── upstreamproxy/           # Proxy configuration
+├── bridge/                  # Ponte para IDE e controle remoto
+├── coordinator/             # Coordenador de múltiplos agentes
+├── plugins/                 # Sistema de plugins
+├── skills/                  # Sistema de habilidades (skills)
+├── keybindings/             # Configuração de atalhos de teclado
+├── vim/                     # Modo Vim
+├── voice/                   # Entrada de voz
+├── remote/                  # Sessões remotas
+├── server/                  # Modo servidor
+├── memdir/                  # Diretório de memória persistente
+├── tasks/                   # Gerenciamento de tarefas
+├── state/                   # Gerenciamento de estado
+├── migrations/              # Migrações de configuração
+├── schemas/                 # Esquemas de configuração (Zod)
+├── entrypoints/             # Lógica de inicialização
+├── ink/                     # Wrapper do renderizador Ink
+├── buddy/                   # Sprite de acompanhante
+├── native-ts/               # Utilitários nativos de TypeScript
+├── outputStyles/            # Estilização de saída
+├── query/                   # Pipeline de consulta
+└── upstreamproxy/           # Configuração de proxy
 ```
 
 ---
 
-## Architecture Summary
+## Resumo da Arquitetura
 
-### 1. Tool System (`src/tools/`)
+### 1. Sistema de Ferramentas (`src/tools/`)
 
-Every tool Claude Code can invoke is implemented as a self-contained module. Each tool defines its input schema, permission model, and execution logic.
+Cada ferramenta que o Claude Code pode invocar é implementada como um módulo independente. Cada ferramenta define seu esquema de entrada, modelo de permissão e lógica de execução.
 
-| Tool | Description |
+| Ferramenta | Descrição |
 |---|---|
-| `BashTool` | Shell command execution |
-| `FileReadTool` | File reading (images, PDFs, notebooks) |
-| `FileWriteTool` | File creation / overwrite |
-| `FileEditTool` | Partial file modification (string replacement) |
-| `GlobTool` | File pattern matching search |
-| `GrepTool` | ripgrep-based content search |
-| `WebFetchTool` | Fetch URL content |
-| `WebSearchTool` | Web search |
-| `AgentTool` | Sub-agent spawning |
-| `SkillTool` | Skill execution |
-| `MCPTool` | MCP server tool invocation |
-| `LSPTool` | Language Server Protocol integration |
-| `NotebookEditTool` | Jupyter notebook editing |
-| `TaskCreateTool` / `TaskUpdateTool` | Task creation and management |
-| `SendMessageTool` | Inter-agent messaging |
-| `TeamCreateTool` / `TeamDeleteTool` | Team agent management |
-| `EnterPlanModeTool` / `ExitPlanModeTool` | Plan mode toggle |
-| `EnterWorktreeTool` / `ExitWorktreeTool` | Git worktree isolation |
-| `ToolSearchTool` | Deferred tool discovery |
-| `CronCreateTool` | Scheduled trigger creation |
-| `RemoteTriggerTool` | Remote trigger |
-| `SleepTool` | Proactive mode wait |
-| `SyntheticOutputTool` | Structured output generation |
+| `BashTool` | Execução de comandos shell |
+| `FileReadTool` | Leitura de arquivos (imagens, PDFs, notebooks) |
+| `FileWriteTool` | Criação / sobrescrita de arquivos |
+| `FileEditTool` | Modificação parcial de arquivos (substituição de strings) |
+| `GlobTool` | Busca por padrões de arquivos |
+| `GrepTool` | Busca de conteúdo baseada em ripgrep |
+| `WebFetchTool` | Busca conteúdo de URLs |
+| `WebSearchTool` | Pesquisa na web |
+| `AgentTool` | Criação de sub-agentes |
+| `SkillTool` | Execução de habilidades |
+| `MCPTool` | Invocação de ferramentas de servidor MCP |
+| `LSPTool` | Integração com Language Server Protocol |
+| `NotebookEditTool` | Edição de notebooks Jupyter |
+| `TaskCreateTool` / `TaskUpdateTool` | Criação e gerenciamento de tarefas |
+| `SendMessageTool` | Mensagens entre agentes |
+| `TeamCreateTool` / `TeamDeleteTool` | Gerenciamento de agentes de equipe |
+| `EnterPlanModeTool` / `ExitPlanModeTool` | Alternar modo de planejamento |
+| `EnterWorktreeTool` / `ExitWorktreeTool` | Isolamento em worktrees do Git |
+| `ToolSearchTool` | Descoberta diferida de ferramentas |
+| `CronCreateTool` | Criação de gatilhos agendados |
+| `RemoteTriggerTool` | Gatilho remoto |
+| `SleepTool` | Espera em modo proativo |
+| `SyntheticOutputTool` | Geração de saída estruturada |
 
-### 2. Command System (`src/commands/`)
+### 2. Sistema de Comandos (`src/commands/`)
 
-User-facing slash commands invoked with `/` prefix.
+Comandos slash voltados para o usuário, invocados com o prefixo `/`.
 
-| Command | Description |
+| Comando | Descrição |
 |---|---|
-| `/commit` | Create a git commit |
-| `/review` | Code review |
-| `/compact` | Context compression |
-| `/mcp` | MCP server management |
-| `/config` | Settings management |
-| `/doctor` | Environment diagnostics |
-| `/login` / `/logout` | Authentication |
-| `/memory` | Persistent memory management |
-| `/skills` | Skill management |
-| `/tasks` | Task management |
-| `/vim` | Vim mode toggle |
-| `/diff` | View changes |
-| `/cost` | Check usage cost |
-| `/theme` | Change theme |
-| `/context` | Context visualization |
-| `/pr_comments` | View PR comments |
-| `/resume` | Restore previous session |
-| `/share` | Share session |
-| `/desktop` | Desktop app handoff |
-| `/mobile` | Mobile app handoff |
+| `/commit` | Cria um commit no git |
+| `/review` | Revisão de código |
+| `/compact` | Compressão de contexto |
+| `/mcp` | Gerenciamento de servidor MCP |
+| `/config` | Gerenciamento de configurações |
+| `/doctor` | Diagnóstico do ambiente |
+| `/login` / `/logout` | Autenticação |
+| `/memory` | Gerenciamento de memória persistente |
+| `/skills` | Gerenciamento de habilidades |
+| `/tasks` | Gerenciamento de tarefas |
+| `/vim` | Alternar modo Vim |
+| `/diff` | Visualizar alterações |
+| `/cost` | Verificar custo de uso |
+| `/theme` | Alterar tema |
+| `/context` | Visualização de contexto |
+| `/pr_comments` | Visualizar comentários de PR |
+| `/resume` | Restaurar sessão anterior |
+| `/share` | Compartilhar sessão |
+| `/desktop` | Transferência para o app de desktop |
+| `/mobile` | Transferência para o app mobile |
 
-### 3. Service Layer (`src/services/`)
+### 3. Camada de Serviço (`src/services/`)
 
-| Service | Description |
+| Serviço | Descrição |
 |---|---|
-| `api/` | Anthropic API client, file API, bootstrap |
-| `mcp/` | Model Context Protocol server connection and management |
-| `oauth/` | OAuth 2.0 authentication flow |
-| `lsp/` | Language Server Protocol manager |
-| `analytics/` | GrowthBook-based feature flags and analytics |
-| `plugins/` | Plugin loader |
-| `compact/` | Conversation context compression |
-| `policyLimits/` | Organization policy limits |
-| `remoteManagedSettings/` | Remote managed settings |
-| `extractMemories/` | Automatic memory extraction |
-| `tokenEstimation.ts` | Token count estimation |
-| `teamMemorySync/` | Team memory synchronization |
+| `api/` | Cliente da API Anthropic, API de arquivos, bootstrap |
+| `mcp/` | Conexão e gerenciamento de servidores Model Context Protocol |
+| `oauth/` | Fluxo de autenticação OAuth 2.0 |
+| `lsp/` | Gerenciador de Language Server Protocol |
+| `analytics/` | Feature flags e análises baseadas no GrowthBook |
+| `plugins/` | Carregador de plugins |
+| `compact/` | Compressão de contexto de conversa |
+| `policyLimits/` | Limites de política da organização |
+| `remoteManagedSettings/` | Configurações gerenciadas remotamente |
+| `extractMemories/` | Extração automática de memórias |
+| `tokenEstimation.ts` | Estimativa de contagem de tokens |
+| `teamMemorySync/` | Sincronização de memória de equipe |
 
-### 4. Bridge System (`src/bridge/`)
+### 4. Sistema de Ponte (`src/bridge/`)
 
-A bidirectional communication layer connecting IDE extensions (VS Code, JetBrains) with the Claude Code CLI.
+Uma camada de comunicação bidirecional que conecta extensões de IDE (VS Code, JetBrains) com a CLI do Claude Code.
 
-- `bridgeMain.ts` — Bridge main loop
-- `bridgeMessaging.ts` — Message protocol
-- `bridgePermissionCallbacks.ts` — Permission callbacks
-- `replBridge.ts` — REPL session bridge
-- `jwtUtils.ts` — JWT-based authentication
-- `sessionRunner.ts` — Session execution management
+- `bridgeMain.ts` — Loop principal da ponte
+- `bridgeMessaging.ts` — Protocolo de mensagens
+- `bridgePermissionCallbacks.ts` — Callbacks de permissão
+- `replBridge.ts` — Ponte de sessão REPL
+- `jwtUtils.ts` — Autenticação baseada em JWT
+- `sessionRunner.ts` — Gerenciamento de execução de sessão
 
-### 5. Permission System (`src/hooks/toolPermission/`)
+### 5. Sistema de Permissões (`src/hooks/toolPermission/`)
 
-Checks permissions on every tool invocation. Either prompts the user for approval/denial or automatically resolves based on the configured permission mode (`default`, `plan`, `bypassPermissions`, `auto`, etc.).
+Verifica permissões em cada invocação de ferramenta. Solicita a aprovação/negação do usuário ou resolve automaticamente com base no modo de permissão configurado (`default`, `plan`, `bypassPermissions`, `auto`, etc.).
 
-### 6. Feature Flags
+### 6. Feature Flags (Sinalizadores de Funcionalidade)
 
-Dead code elimination via Bun's `bun:bundle` feature flags:
+Eliminação de código morto por meio de feature flags do `bun:bundle`:
 
 ```typescript
 import { feature } from 'bun:bundle'
 
-// Inactive code is completely stripped at build time
+// Código inativo é completamente removido no momento da build
 const voiceCommand = feature('VOICE_MODE')
   ? require('./commands/voice/index.js').default
   : null
 ```
 
-Notable flags: `PROACTIVE`, `KAIROS`, `BRIDGE_MODE`, `DAEMON`, `VOICE_MODE`, `AGENT_TRIGGERS`, `MONITOR_TOOL`
+Flags notáveis: `PROACTIVE`, `KAIROS`, `BRIDGE_MODE`, `DAEMON`, `VOICE_MODE`, `AGENT_TRIGGERS`, `MONITOR_TOOL`
 
 ---
 
-## Key Files in Detail
+## Arquivos Chave em Detalhes
 
-### `QueryEngine.ts` (~46K lines)
+### `QueryEngine.ts` (~46 mil linhas)
 
-The core engine for LLM API calls. Handles streaming responses, tool-call loops, thinking mode, retry logic, and token counting.
+O motor principal para chamadas de API de LLM. Lida com respostas em streaming, loops de chamada de ferramentas, modo de pensamento (thinking mode), lógica de re-tentativa e contagem de tokens.
 
-### `Tool.ts` (~29K lines)
+### `Tool.ts` (~29 mil linhas)
 
-Defines base types and interfaces for all tools — input schemas, permission models, and progress state types.
+Define tipos base e interfaces para todas as ferramentas — esquemas de entrada, modelos de permissão e tipos de estado de progresso.
 
-### `commands.ts` (~25K lines)
+### `commands.ts` (~25 mil linhas)
 
-Manages registration and execution of all slash commands. Uses conditional imports to load different command sets per environment.
+Gerencia o registro e a execução de todos os comandos slash. Usa importações condicionais para carregar diferentes conjuntos de comandos por ambiente.
 
 ### `main.tsx`
 
-Commander.js-based CLI parser and React/Ink renderer initialization. At startup, it overlaps MDM settings, keychain prefetch, and GrowthBook initialization for faster boot.
+Parser CLI baseado em Commander.js e inicialização do renderizador React/Ink. Na inicialização, ele sobrepõe configurações de MDM, pré-carregamento de keychain e inicialização do GrowthBook para um boot mais rápido.
 
 ---
 
-## Tech Stack
+## Pilha Tecnológica (Tech Stack)
 
-| Category | Technology |
+| Categoria | Tecnologia |
 |---|---|
 | Runtime | [Bun](https://bun.sh) |
-| Language | TypeScript (strict) |
-| Terminal UI | [React](https://react.dev) + [Ink](https://github.com/vadimdemedes/ink) |
-| CLI Parsing | [Commander.js](https://github.com/tj/commander.js) (extra-typings) |
-| Schema Validation | [Zod v4](https://zod.dev) |
-| Code Search | [ripgrep](https://github.com/BurntSushi/ripgrep) |
-| Protocols | [MCP SDK](https://modelcontextprotocol.io), LSP |
+| Linguagem | TypeScript (strict) |
+| Interface de Terminal | [React](https://react.dev) + [Ink](https://github.com/vadimdemedes/ink) |
+| Parsing de CLI | [Commander.js](https://github.com/tj/commander.js) (extra-typings) |
+| Validação de Esquema | [Zod v4](https://zod.dev) |
+| Busca de Código | [ripgrep](https://github.com/BurntSushi/ripgrep) |
+| Protocolos | [MCP SDK](https://modelcontextprotocol.io), LSP |
 | API | [Anthropic SDK](https://docs.anthropic.com) |
-| Telemetry | OpenTelemetry + gRPC |
+| Telemetria | OpenTelemetry + gRPC |
 | Feature Flags | GrowthBook |
-| Auth | OAuth 2.0, JWT, macOS Keychain |
+| Autenticação | OAuth 2.0, JWT, macOS Keychain |
 
 ---
 
-## Notable Design Patterns
+## Padrões de Design Notáveis
 
-### Parallel Prefetch
+### Pré-carregamento Paralelo (Parallel Prefetch)
 
-Startup time is optimized by prefetching MDM settings, keychain reads, and API preconnect in parallel before heavy module evaluation begins.
+O tempo de inicialização é otimizado através do pré-carregamento paralelo de configurações de MDM, leitura de keychain e pré-conexão de API antes do início da avaliação pesada de módulos.
 
 ```typescript
-// main.tsx — fired as side-effects before other imports
+// main.tsx — disparado como efeitos colaterais antes de outros imports
 startMdmRawRead()
 startKeychainPrefetch()
 ```
 
-### Lazy Loading
+### Carregamento Lento (Lazy Loading)
 
-Heavy modules (OpenTelemetry, gRPC, analytics, and some feature-gated subsystems) are deferred via dynamic `import()` until actually needed.
+Módulos pesados (OpenTelemetry, gRPC, analytics e alguns subsistemas protegidos por flags) são adiados via `import()` dinâmico até que sejam realmente necessários.
 
-### Agent Swarms
+### Enxames de Agentes (Agent Swarms)
 
-Sub-agents are spawned via `AgentTool`, with `coordinator/` handling multi-agent orchestration. `TeamCreateTool` enables team-level parallel work.
+Sub-agentes são criados via `AgentTool`, com o `coordinator/` lidando com a orquestração multi-agente. `TeamCreateTool` permite o trabalho paralelo em nível de equipe.
 
-### Skill System
+### Sistema de Habilidades (Skill System)
 
-Reusable workflows defined in `skills/` are executed through `SkillTool`. Users can add custom skills.
+Fluxos de trabalho reutilizáveis definidos em `skills/` são executados através da `SkillTool`. Os usuários podem adicionar habilidades personalizadas.
 
-### Plugin Architecture
+### Arquitetura de Plugins
 
-Built-in and third-party plugins are loaded through the `plugins/` subsystem.
+Plugins nativos e de terceiros são carregados através do subsistema `plugins/`.
 
 ---
 
-## Research / Ownership Disclaimer
+## Aviso de Pesquisa / Propriedade
 
-- This repository is an **educational and defensive security research archive** maintained by a university student.
-- It exists to study source exposure, packaging failures, and the architecture of modern agentic CLI systems.
-- The original Claude Code source remains the property of **Anthropic**.
-- This repository is **not affiliated with, endorsed by, or maintained by Anthropic**.
+- Este repositório é um **arquivo de pesquisa de segurança educacional e defensiva** mantido por um estudante universitário.
+- Existe para estudar a exposição de fontes, falhas de empacotamento e a arquitetura de sistemas CLI baseados em agentes modernos.
+- O código fonte original do Claude Code permanece propriedade da **Anthropic**.
+- Este repositório **não é afiliado, endossado ou mantido pela Anthropic**.
